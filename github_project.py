@@ -1,8 +1,9 @@
 import config
 import requests
 import json
+import argparse
 
-#-------------
+#---------
 
 def connect_github(user):
    
@@ -11,7 +12,7 @@ def connect_github(user):
     gh_session.auth = (user, token)
     return gh_session
 
-#---------------
+#---------
 
 def get_repos(user):
    
@@ -24,10 +25,7 @@ def get_repos(user):
         repo_language.append(repo['language'])
     return repo_language
 
-#a = get_repos('repoZtrees')
-#print(a)
-
-#-----------
+#---------
 
 def get_fav_language(user_name):
 
@@ -40,14 +38,13 @@ def get_fav_language(user_name):
         if(prog_languages>counter):
             counter = prog_languages
             pl = i
-    return pl 
-        
-#a = get_fav_language('RepoZTrees')
-#print(a)
+    print('Your language of choice is:',pl)
+    return pl
 
 #---------
 
-def recommend_project(user):
+def recommend_project_by_language_and_sort_by_updated(user):
+       
     project_name = [] 
     search_language = get_fav_language(user)
     sort_by = 'updated'
@@ -58,7 +55,27 @@ def recommend_project(user):
     for project in repos['items']:
         json_format = json.dumps(project,indent=4)
         project_name.append(project['full_name'])
-    return project_name
+        
+    project_names = []
+    
+    for i in project_name:
+        project_names.append(i)
+    return project_names
 
-rec = recommend_project('RepoZTrees')
-print(rec)
+#---------
+
+def arg_parse():
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-u","--user", help="Enter your GitHub username.")
+    args = parser.parse_args()
+    return args.user
+
+if __name__ == "__main__":
+    user_name = arg_parse()
+    rec_projects =  recommend_project_by_language_and_sort_by_updated(user_name)
+    print('\n')
+    print("Repositories Committed Recently")
+    print('\n')
+    for i in rec_projects:    
+        print(f"GitHub Username/Repository Name: {i} \n")
