@@ -1,12 +1,14 @@
 # github_project_recommendation_tool
 
-This project is still under development. However, this what this prgogram does so far:
+This programme is still under development. However, this what it does so far:
+  
+  - It takes username (of GitHub) as a command line argument 
+  - It'll print user's language of choice (favorite language) based on the repositories of the user  
+  - It'll print the list of username and repository name that were committed recently for that particular programming 
+    language. For e.g. if user's most of the repos are in Python, then it'll print username/repository names  
+    committed recently for Python.
 
-  - It'll go through username's repositories
-  - Based on user's commits, it'll give the language of choice (or favorite language)
-  - It'll give you all the repos committed recently in your language of choice. For e.g. if most of your commits are in Python,     then it'll look for recent commits in Python.
-
-Detailed project description coming soon...... But in the meantime if you would like to use run this program from command line, please enter:
+To run this program from command line, please enter:
 
 # repoZTrees is a GitHub user name. You can enter your GitHub username.
 
