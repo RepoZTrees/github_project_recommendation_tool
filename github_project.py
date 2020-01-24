@@ -43,19 +43,18 @@ def get_fav_language(user_name):
 
 #---------
 
-def recommend_project_by_language_and_sort_by_updated(user):
-       
-    project_name = [] 
+def get_popular_projects(user):
     search_language = get_fav_language(user)
     sort_by = 'updated'
     repos_url = 'https://api.github.com/search/repositories?q=language:'+search_language+'&sort='+sort_by+'&order=desc'
     gh_session = connect_github(user)
     repos = json.loads(gh_session.get(repos_url).text)
-     
+    return repos
+
+def recommend_project(repos):
     for project in repos['items']:
         json_format = json.dumps(project,indent=4)
         project_name.append(project['full_name'])
-        
     project_names = []
     
     for i in project_name:
@@ -78,4 +77,15 @@ if __name__ == "__main__":
     print("Repositories Committed Recently")
     print('\n')
     for i in rec_projects:    
-        print(f"GitHub Username/Repository Name: {i} \n")
+        print("GitHub Username/Repository Name: {} \n".format(i))
+
+
+
+def sample():
+    # Sample API
+    session = gh_session(user)
+    gh_query_url = make_query(site = "github", language = "python", date_from = dt, sort_by = "updated", ...) # Test this
+    response = session.get(gh_query_url)
+    repos = recommend(response) # Test this
+
+    
