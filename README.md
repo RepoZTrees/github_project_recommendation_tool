@@ -9,8 +9,6 @@ This programme is still under development. However, this what it does so far:
 
 To run this program from command line, please enter:
 
-* Command Line Arguments:
-
   - `$ python3 github_project.py --user repoZTrees`     
       
       or
