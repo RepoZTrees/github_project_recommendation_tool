@@ -2,6 +2,8 @@ import config
 import requests
 import json
 import argparse
+from urllib.parse import urlparse
+from urllib.parse import urljoin
 
 #---------
 
@@ -14,7 +16,7 @@ def connect_github(user):
 
 #---------
 
-def get_repos(user):
+def get_languages(user):
    
     repos_url = 'https://api.github.com/user/repos'
     gh_session = connect_github(user)
@@ -29,7 +31,7 @@ def get_repos(user):
 
 def get_fav_language(user_name):
 
-    languages = get_repos(user_name)
+    languages = get_languages(user_name)
     counter = 0
     num = languages[0]   
 
@@ -41,25 +43,46 @@ def get_fav_language(user_name):
     print('Your language of choice is:',pl)
     return pl
 
-#---------
+#----------
 
-def get_popular_projects(user):
+def query_params(l='python', sort_key='updated', order='desc'):
+    return dict(q=f'language:{l}',sort = sort_key, order=order)
+
+def get_repos(user):
+    
     search_language = get_fav_language(user)
-    sort_by = 'updated'
-    repos_url = 'https://api.github.com/search/repositories?q=language:'+search_language+'&sort='+sort_by+'&order=desc'
-    gh_session = connect_github(user)
-    repos = json.loads(gh_session.get(repos_url).text)
+    url = 'https://api.github.com/search/repositories'    
+    get_repos_url = requests.get(url,params=query_params(l=search_language))
+    repos_url = get_repos_url
+    return repos_url
+
+# a = url_construction('repoZTrees')
+# print(a)
+
+#--------
+
+def fetching(user):
+    
+    repos_url = get_repos(user)
+    repos = repos_url.json()
     return repos
 
-def recommend_project(repos):
+
+def recommend_project(user):
+    
+    project_name = []
+    repos = fetching(user)
     for project in repos['items']:
         json_format = json.dumps(project,indent=4)
         project_name.append(project['full_name'])
-    project_names = []
-    
+
+    project_names = [] 
     for i in project_name:
         project_names.append(i)
     return project_names
+
+#a = recommend_project('repoZTrees')
+#print(a)
 
 #---------
 
@@ -72,20 +95,9 @@ def arg_parse():
 
 if __name__ == "__main__":
     user_name = arg_parse()
-    rec_projects =  recommend_project_by_language_and_sort_by_updated(user_name)
+    rec_projects = recommend_project(user_name)
     print('\n')
     print("Repositories Committed Recently")
     print('\n')
     for i in rec_projects:    
         print("GitHub Username/Repository Name: {} \n".format(i))
-
-
-
-def sample():
-    # Sample API
-    session = gh_session(user)
-    gh_query_url = make_query(site = "github", language = "python", date_from = dt, sort_by = "updated", ...) # Test this
-    response = session.get(gh_query_url)
-    repos = recommend(response) # Test this
-
-    
