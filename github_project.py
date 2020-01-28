@@ -61,7 +61,7 @@ def get_repos(user):
 
 #--------
 
-def fetching(user):
+def fetch_repos(user):
     
     repos_url = get_repos(user)
     repos = repos_url.json()
@@ -71,7 +71,7 @@ def fetching(user):
 def recommend_project(user):
     
     project_name = []
-    repos = fetching(user)
+    repos = fetch_repos(user)
     for project in repos['items']:
         json_format = json.dumps(project,indent=4)
         project_name.append(project['full_name'])
