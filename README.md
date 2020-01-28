@@ -1,4 +1,4 @@
-# github_project_recommendation_tool
+# GitHub Project Recommendation Tool
 
 This programme is still under development. However, this what it does so far:
   
@@ -8,10 +8,6 @@ This programme is still under development. However, this what it does so far:
     language. For e.g. if user's favorite language is Python, it'll print all the recent commits/repositories for Python.
 
 To run this program from command line, please enter:
-
-# repoZTrees is a GitHub user name. You can enter your GitHub username.
-
-* Command Line Arguments:
 
   - `$ python3 github_project.py --user repoZTrees`     
       
