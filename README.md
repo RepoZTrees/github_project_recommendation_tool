@@ -1,4 +1,4 @@
-# Project Recommendation Tool
+# Project Recommendation using GitHub
   
   - It takes username (of GitHub) as a command line argument 
   - It'll print user's language of choice (favorite language) based on the repositories of the user  
